@@ -1,0 +1,62 @@
+.Dd $Mdocdate$
+.Dt LSWIFI 1
+.Os
+.Sh NAME
+.Nm lswifi
+.Nd scans for wifi/wlan networks and list them as CSV.
+.\" .Sh LIBRARY
+.\" For sections 2, 3, and 9 only.
+.\" Not used in OpenBSD.
+.Sh SYNOPSIS
+.Nm lswifi
+.Op Fl v
+.Op Fl s Ar separator
+.Op Fl r Ar record-separator
+.Sh DESCRIPTION
+The
+.Nm
+works like 'ifconfig * scan' and outputs the found wifi networks in an
+easy-to-parse CSV format.
+It tries out all existing interfaces and skips those who cannot run the 'scan'
+command.
+
+.Ss Options
+
+.Bl -tag -width indent
+.It Fl s Ar separator
+Set the separator between the given fields (Default: Tab)
+.It Fl r Ar record-separator
+Set the separator between the given networks (Default: Newline)
+.It Fl v
+Verbose output, mainly meant for debuggin
+.El
+
+.Ss Output Columns
+
+.Bl -tag -width indent
+.It Interface
+The Interface on which the network was found
+.It Connected
+ '1' if the Network is already connected on that interface. '0' otherwise.
+.It Network Name
+The visible Name of the Network
+.It Network SSID
+The SSID of the network in human readable format
+.It Signal Strength
+The Signal strength in the unit of the following column.
+.It Signal Strength Unit 
+The Unit in which the Signal strength is expressed (% or dBm).
+.El
+
+.Sh EXIT STATUS
+Always null. Errors are silently skipped.
+.Sh SEE ALSO
+.Xr ifconfig 1
+.Sh HISTORY
+Built to simplify building a graphical OpenBSD Wifi Manager.
+.Sh AUTHORS
+.An Andreas Koerner Aq Mt andi@jaak.de
+.Sh SECURITY CONSIDERATIONS
+Needs to be run as root to be allowed to do wifi scanning. pledges itself before 
+writing any output. Yet you better audit the code before you run it.
+The Code is just 300 lines.
